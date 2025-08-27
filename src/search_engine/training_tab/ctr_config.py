@@ -165,7 +165,7 @@ class CTRModelConfig:
     }
     
     # 默认模型
-    DEFAULT_MODEL = 'logistic_regression'
+    DEFAULT_MODEL = 'wide_and_deep'
     
     @classmethod
     def get_supported_models(cls) -> Dict[str, Dict[str, Any]]:

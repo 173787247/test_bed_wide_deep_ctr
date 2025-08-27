@@ -15,7 +15,7 @@ import re
 # 全局变量用于存储当前request_id
 current_request_id = None
 
-def perform_search(index_service, data_service, query: str, sort_mode: str = "ctr", model_type: str = "logistic_regression"):
+def perform_search(index_service, data_service, query: str, sort_mode: str = "ctr", model_type: str = "wide_and_deep"):
     if not query or not query.strip():
         return [], pd.DataFrame(), ""
     try:

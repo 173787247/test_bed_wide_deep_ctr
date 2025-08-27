@@ -113,7 +113,7 @@ def create_model_instance(model_type: str):
         from .ctr_model import CTRModel
         return CTRModel()
 
-def train_ctr_model_direct(ctr_model, data_service, model_type: str = "logistic_regression"):
+def train_ctr_model_direct(ctr_model, data_service, model_type: str = "wide_and_deep"):
     """直接使用data_service训练CTR模型"""
     try:
         # 获取训练数据
@@ -196,7 +196,7 @@ def train_ctr_model_direct(ctr_model, data_service, model_type: str = "logistic_
             "<p>暂无特征权重数据</p>"
         )
 
-def train_ctr_model(ctr_model, ctr_collector, model_type: str = "logistic_regression"):
+def train_ctr_model(ctr_model, ctr_collector, model_type: str = "wide_and_deep"):
     """训练CTR模型"""
     try:
         # 获取训练数据

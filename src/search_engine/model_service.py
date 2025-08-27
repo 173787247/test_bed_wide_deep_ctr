@@ -13,19 +13,19 @@ class ModelService:
     
     def __init__(self, model_file: str = None):
         if model_file is None:
-            model_file = os.path.join(os.getcwd(), "models", "ctr_model.pkl")
+            model_file = os.path.join(os.getcwd(), "models", "wide_deep_ctr_model")
         self.model_file = model_file
-        self.ctr_model = CTRModel()  # 默认使用LR模型
-        self.current_model_type = "logistic_regression"
+        self.ctr_model = self.create_model_instance("wide_and_deep")  # 默认使用Wide & Deep模型
+        self.current_model_type = "wide_and_deep"
         self.model_instances = {}  # 存储不同类型的模型实例
         self._load_model()
     
     def _load_model(self):
         """加载模型"""
         if self.ctr_model.load_model(self.model_file):
-            print(f"✅ CTR模型加载成功: {self.model_file}")
+            print(f"✅ Wide & Deep CTR模型加载成功: {self.model_file}")
         else:
-            print(f"⚠️ CTR模型未找到，将使用未训练状态: {self.model_file}")
+            print(f"⚠️ Wide & Deep CTR模型未找到，将使用未训练状态: {self.model_file}")
     
     def create_model_instance(self, model_type: str):
         """创建指定类型的模型实例"""
@@ -89,7 +89,7 @@ class ModelService:
                     'error': '没有CTR数据用于训练'
                 }
             
-            # 训练模型
+            # 训练Wide & Deep模型
             result = self.ctr_model.train(samples)
             
             if result.get('success', False):
@@ -147,7 +147,7 @@ class ModelService:
             with open(info_path, 'w', encoding='utf-8') as f:
                 json.dump(model_info, f, ensure_ascii=False, indent=2)
             
-            print(f"✅ 模型保存成功: {save_path}")
+            print(f"✅ Wide & Deep模型保存成功: {save_path}")
             return True
             
         except Exception as e:
@@ -245,7 +245,7 @@ class ModelService:
                 model_info = {
                     'model_file': self.model_file,
                     'save_time': None,
-                    'model_type': 'CTR_LogisticRegression',
+                    'model_type': 'CTR_WideAndDeep',
                     'feature_count': 0,
                     'training_samples': 0
                 }
@@ -369,8 +369,8 @@ class ModelService:
                 os.remove(info_path)
                 print(f"✅ 模型信息文件删除成功: {info_path}")
             
-            # 重置模型
-            self.ctr_model = CTRModel()
+            # 重置为Wide & Deep模型
+            self.ctr_model = self.create_model_instance("wide_and_deep")
             
             return True
             
